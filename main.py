@@ -28,7 +28,31 @@ db.connect()
 db.create_tables([Artists, Artworks])
 
 
+def main():
+    print('Chainsaw Juggling Record Holders as of July 2018')
+    while True:
+        print_menu()
+        choice = get_menu_choice()
+        if choice == 1:
+            new_artist()
+
+        elif choice.upper() == 'Q':
+            break
 
 
+def print_menu():
+    print('1: New Record')
+    print('2: Search')
+    print('3: Edit a record')
+    print('4: Delete a record')
 
-main()
+def get_menu_choice():
+    choice = input('\nPlease choose an option (1-4) or press "Q" to quit: ')
+    while choice.isnumeric() is False and choice.upper() != 'Q':
+        choice = input('Please choose an option (1-4) or press "Q" to quit: ')
+    if choice.isnumeric():
+        choice = int(choice)
+    return choice
+
+if __name__ =='__main__':
+    main()
