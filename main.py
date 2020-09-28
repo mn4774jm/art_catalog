@@ -1,7 +1,7 @@
 from peewee import *
 db = SqliteDatabase('gallery.sqlite')
 
-
+#TODO split tables and classes into seperate file
 class Artists(Model):
     artist = CharField()
     email = CharField()
@@ -43,7 +43,7 @@ def main():
 def print_menu():
     print('1: New Record')
 
-
+# TODO split menu into new file
 def get_menu_choice():
     choice = input('\nPlease choose an option (1-4) or press "Q" to quit: ')
     while choice.isnumeric() is False and choice.upper() != 'Q':
@@ -52,7 +52,7 @@ def get_menu_choice():
         choice = int(choice)
     return choice
 
-#TODO
+# TODO user input into new file
 def new_artist():
     new_name = input('Artist name: ')
     name_query = Artists.select().where(Artists.artist == new_name)
