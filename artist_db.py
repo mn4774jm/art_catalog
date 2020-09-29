@@ -3,7 +3,6 @@ from config import db_path
 
 db = SqliteDatabase(db_path)
 
-#TODO split tables and classes into seperate file
 class Artists(Model):
     artist = CharField()
     email = CharField()

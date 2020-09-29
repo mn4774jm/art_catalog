@@ -40,7 +40,6 @@ def new_artist():
     record = Artworks(artist=noa, artwork_name=artwork, price=new_price)
     record.save()
     print(record)
-    print(noa)
 
 if __name__ =='__main__':
     main()
