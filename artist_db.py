@@ -1,6 +1,8 @@
 from peewee import *
 from config import db_path
+import os
 
+db_path = os.path.join('database', db_path)
 db = SqliteDatabase(db_path)
 
 class Artists(Model):

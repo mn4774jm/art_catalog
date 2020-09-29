@@ -13,7 +13,6 @@ def get_menu_choice():
 def new_artist():
     new_name = input('Artist name: ')
     name_query = artist_query(new_name)
-    # name_query = Artists.select().where(Artists.artist == new_name)
     if name_query.count() == 0:
         email = input('new_email:')
         noa = Artists(artist=new_name, email=email)
