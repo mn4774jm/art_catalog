@@ -19,9 +19,13 @@ def print_menu():
 
 
 def add_artist():
-    artist_record = ui.new_artist()
-    artist_record.save()
-    print(artist_record)
+    # try:
+        artist_record = ui.new_artist()
+        artist_record.save()
+        print(artist_record)
+    # except Exception as e:
+    #     print(f'\n{e}\n')
+
 
 
 if __name__ =='__main__':

@@ -27,3 +27,8 @@ class Artworks(Model):
 
 db.connect()
 db.create_tables([Artists, Artworks])
+
+def artist_query(name):
+    return Artists.select().where(Artists.artist == name)
+
+
