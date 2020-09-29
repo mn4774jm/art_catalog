@@ -27,7 +27,7 @@ class Artworks(Model):
         database = db
 
     def __str__(self):
-        return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Available: {self.available} '
+        return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Available: {self.available}\n'
 
 
 db.connect()
