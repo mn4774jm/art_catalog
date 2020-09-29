@@ -8,7 +8,7 @@ def main():
         print_menu()
         choice = ui.get_menu_choice()
         if choice == 1:
-            add_artist()
+            add_art()
 
         elif choice.upper() == 'Q':
             break
@@ -18,13 +18,13 @@ def print_menu():
     print('1: New Record')
 
 
-def add_artist():
-    # try:
-        artist_record = ui.new_artist()
+def add_art():
+    try:
+        artist_record = ui.add_artwork()
         artist_record.save()
         print(artist_record)
-    # except Exception as e:
-    #     print(f'\n{e}\n')
+    except Exception as e:
+        print(f'\n{e}\n')
 
 
 

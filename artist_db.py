@@ -5,6 +5,7 @@ import os
 db_path = os.path.join('database', db_path)
 db = SqliteDatabase(db_path)
 
+
 class Artists(Model):
     artist = CharField()
     email = CharField()
@@ -14,6 +15,7 @@ class Artists(Model):
 
     def __str__(self):
         return f'Name: {self.artist} | email: {self.email}'
+
 
 class Artworks(Model):
     artist = ForeignKeyField(Artists, backref= 'works')
@@ -25,10 +27,12 @@ class Artworks(Model):
         database = db
 
     def __str__(self):
-        return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: {self.price} | Available: {self.available}'
+        return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Available: {self.available} '
+
 
 db.connect()
 db.create_tables([Artists, Artworks])
+
 
 def artist_query(name):
     return Artists.select().where(Artists.artist == name)
