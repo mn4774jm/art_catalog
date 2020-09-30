@@ -27,14 +27,28 @@ class Artworks(Model):
         database = db
 
     def __str__(self):
-        return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Available: {self.available}\n'
+        return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Available: {self.available}'
 
 
 db.connect()
 db.create_tables([Artists, Artworks])
 
 
-def artist_query(name):
-    return Artists.select().where(Artists.artist == name)
+def create_new_artist(name, email):
+    return Artists(artist=name, email=email)
 
 
+def create_art_entry(artist_name, art_name, value):
+    try:
+        new_art = Artworks(artist=artist_name, artwork_name=art_name, price=value)
+        new_art.save()
+        print(f'{new_art}\n')
+    except IntegrityError as e:
+        print(f'Unable to process entry request {e}')
+        #TODO create test for here
+        # raise EntryError(f'Unable to process entry') from e
+
+
+
+class EntryError(Exception):
+    pass
