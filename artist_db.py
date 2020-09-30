@@ -11,7 +11,7 @@ class EntryError(Exception):
 
 
 class Artists(Model):
-    artist = CharField()
+    artist = CharField(unique=True)
     email = CharField()
 
     class Meta:
