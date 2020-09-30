@@ -13,6 +13,7 @@ class TestArtistDb(TestCase):
         Artworks.instance = None
 
 
+
     def setUp(self):
         self.Artist = Artists()
         self.Artwork = Artworks()
