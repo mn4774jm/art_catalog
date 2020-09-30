@@ -52,3 +52,9 @@ def create_art_entry(artist_name, art_name, value):
 
 class EntryError(Exception):
     pass
+
+def delete_all_artworks():
+    pass
+
+def delete_all_artists():
+    pass
