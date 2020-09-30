@@ -45,11 +45,9 @@ class TestArtistDb(TestCase):
     def test_add_artist_duplicate(self):
         new_artist = Artists(name='dave', email='aaa123@gmail.com')
         new_artist.save()
-
-
-        # with self.assertRaises(EntryError):
-        #     art_dupe = Artists(name='dave', email='aaa123@gmail.com')
-        #     art_dupe.save()
+        with self.assertRaises(EntryError):
+            art_dupe = Artists(name='dave', email='aaa123@gmail.com')
+            art_dupe.save()
 
 
 

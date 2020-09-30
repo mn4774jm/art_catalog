@@ -11,6 +11,7 @@ class EntryError(Exception):
 
 
 class Artists(Model):
+    artist_id = AutoField()
     artist = CharField(unique=True)
     email = CharField()
 
@@ -25,6 +26,7 @@ class Artists(Model):
 
 
 class Artworks(Model):
+    artwork_id = AutoField()
     artist = ForeignKeyField(Artists, backref= 'works')
     artwork_name = CharField()
     price = DecimalField()
@@ -49,7 +51,8 @@ def create_new_artist(name, email):
         new_artist.save()
         print(f'{new_artist} has been added to the database\n')
     except IntegrityError as e:
-        print(f'Artist is already in the database\n')
+        # raise EntryError(f'Artist is already in the database\n') from e
+        print("artist already in database")
 
 
 def create_art_entry(artist_name, art_name, value):

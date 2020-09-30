@@ -1,8 +1,8 @@
-
+from peewee import *
 import ui
 from artist_db import create_art_entry, create_new_artist
 import utility
-from query import artist_query
+from query import artist_query, search_all_by_artist
 
 def main():
     print('Gallery database')
@@ -36,18 +36,19 @@ def print_menu():
     print('6: Change art availability')
 
 
-
-
 def add_artist():
     artist_name = ui.get_name()
     if artist_query(artist_name) == 0:
         email = ui.get_email()
         create_new_artist(artist_name, email)
-        # new_artist.save()
-        # print(f'{new_artist} has been added to the database\n')
 
 
 def search_by_artist_all():
+    name = ui.get_name()
+    fixed_name = artist_query(name)
+    utility.artwork_output(search_all_by_artist(fixed_name))
+
+
     pass
 
 
@@ -56,10 +57,13 @@ def search_by_artist_available():
 
 
 def add_art():
-    artist_name = ui.get_name()
-    art_name = ui.get_art_name()
-    value = utility.validate_price(ui.get_value())
-    create_art_entry(artist_query(artist_name), art_name, value)
+    try:
+        artist_name = ui.get_name()
+        art_name = ui.get_art_name()
+        value = utility.validate_price(ui.get_value())
+        create_art_entry(artist_query(artist_name), art_name, value)
+    except IntegrityError as e:
+        pass
 
 
 def delete_art():
