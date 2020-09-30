@@ -2,7 +2,7 @@ from peewee import *
 import ui
 from artist_db import create_art_entry, create_new_artist
 import utility
-from query import artist_query, search_all_by_artist
+from query import artist_query, search_all_by_artist, search_by_available
 
 def main():
     print('Gallery database')
@@ -45,15 +45,16 @@ def add_artist():
 
 def search_by_artist_all():
     name = ui.get_name()
-    fixed_name = artist_query(name)
-    utility.artwork_output(search_all_by_artist(fixed_name))
-
-
-    pass
+    artist_object = artist_query(name)
+    artwork_objects = search_all_by_artist(artist_object)
+    utility.artwork_output(artwork_objects)
 
 
 def search_by_artist_available():
-    pass
+    name = ui.get_name()
+    artist_object = artist_query(name)
+    artwork_objects = search_by_available(artist_object)
+    utility.artwork_output(artwork_objects)
 
 
 def add_art():
