@@ -23,14 +23,14 @@ def print_menu():
     print('1: New Artist')
     print('2: New Artwork')
 
-
+#TODO: fix error that allows for identical entries
 def add_artist():
     artist_name = ui.get_name()
     if artist_query(artist_name) == 0:
         email = ui.get_email()
-        new_artist = create_new_artist(artist_name, email)
-        new_artist.save()
-        print(f'{new_artist} has been added to the database\n')
+        create_new_artist(artist_name, email)
+        # new_artist.save()
+        # print(f'{new_artist} has been added to the database\n')
 
 
 def add_art():

@@ -6,6 +6,10 @@ db_path = os.path.join('database', db_path)
 db = SqliteDatabase(db_path)
 
 
+class EntryError(Exception):
+    pass
+
+
 class Artists(Model):
     artist = CharField()
     email = CharField()
@@ -40,7 +44,12 @@ db.create_tables([Artists, Artworks])
 
 
 def create_new_artist(name, email):
-    return Artists(artist=name, email=email)
+    try:
+        new_artist = Artists(artist=name, email=email)
+        new_artist.save()
+        print(f'{new_artist} has been added to the database\n')
+    except IntegrityError as e:
+        raise EntryError(f'Artist is already in the database') from e
 
 
 def create_art_entry(artist_name, art_name, value):
@@ -50,13 +59,10 @@ def create_art_entry(artist_name, art_name, value):
         print(f'{new_art}\n')
     except IntegrityError as e:
         print(f'Unable to process entry request {e}')
-        #TODO create test for here
-        # raise EntryError(f'Unable to process entry') from e
 
 
 
-class EntryError(Exception):
-    pass
+
 
 
 

@@ -24,3 +24,6 @@ class TestArtistDb(TestCase):
     def clear_artwork_table(self):
         self.Artwork.delete_all_artworks()
 
+    def test_art_no_artist(self):
+        pass
+
