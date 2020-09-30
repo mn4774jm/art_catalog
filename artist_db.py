@@ -21,14 +21,11 @@ class Artists(Model):
     def __str__(self):
         return f'Name: {self.artist} | email: {self.email}'
 
-    def delete_all_artists(self):
-        Artists.delete().execute()
-
 
 class Artworks(Model):
     artwork_id = AutoField()
     artist = ForeignKeyField(Artists, backref= 'works')
-    artwork_name = CharField()
+    artwork_name = CharField(unique=True)
     price = DecimalField()
     available = CharField(default='Available')
 
@@ -38,8 +35,6 @@ class Artworks(Model):
     def __str__(self):
         return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Available: {self.available}'
 
-    def delete_all_artworks(self):
-        Artworks.delete().execute()
 
 db.connect()
 db.create_tables([Artists, Artworks])
@@ -62,6 +57,12 @@ def create_art_entry(artist_name, art_name, value):
         print(f'{new_art}\n')
     except IntegrityError as e:
         print(f'Unable to process entry request {e}')
+
+
+def delete_artwork_by_name(artwork):
+    Artworks.delete().where(Artworks.artwork_name == artwork).execute()
+    print(f'{artwork} has been deleted')
+
 
 
 

@@ -1,8 +1,8 @@
 from peewee import *
 import ui
-from artist_db import create_art_entry, create_new_artist
+from artist_db import create_art_entry, create_new_artist, delete_artwork_by_name
 import utility
-from query import artist_query, search_all_by_artist, search_by_available
+from query import artist_query, search_all_by_artist, search_by_available, search_artwork_by_name
 
 def main():
     print('Gallery database')
@@ -14,15 +14,14 @@ def main():
             add_artist()
         elif choice == 2:
             search_by_artist_all()
-        elif choice ==3:
+        elif choice == 3:
             search_by_artist_available()
-        elif choice ==4:
+        elif choice == 4:
             add_art()
-        elif choice ==5:
+        elif choice == 5:
             delete_art()
-        elif choice ==6:
+        elif choice == 6:
             change_available_status()
-
         elif choice.upper() == 'Q':
             break
 
@@ -68,7 +67,12 @@ def add_art():
 
 
 def delete_art():
-    pass
+    art_name = ui.get_art_name()
+    artwork_object = search_artwork_by_name(art_name)
+    for art in artwork_object:
+        remove = ui.remove_art_check(art.artwork_name, art.artist)
+        if remove == 'y':
+            delete_artwork_by_name(art_name)
 
 
 def change_available_status():
