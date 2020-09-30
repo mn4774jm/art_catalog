@@ -34,13 +34,8 @@ db.connect()
 db.create_tables([Artists, Artworks])
 
 
-<<<<<<< HEAD
-def artist_query(name):
-    Artists.select().where(Artists.artist == name)
-=======
 def create_new_artist(name, email):
     return Artists(artist=name, email=email)
->>>>>>> test
 
 
 def create_art_entry(artist_name, art_name, value):
