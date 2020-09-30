@@ -11,3 +11,5 @@ class TestArtistDb(TestCase):
         artist_db.db = os.path.join('database', 'test_books.db')
         Artists.instance = None
         Artworks.instance = None
+
+
