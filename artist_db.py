@@ -16,6 +16,9 @@ class Artists(Model):
     def __str__(self):
         return f'Name: {self.artist} | email: {self.email}'
 
+    def delete_all_artists(self):
+        Artists.delete().execute()
+
 
 class Artworks(Model):
     artist = ForeignKeyField(Artists, backref= 'works')
@@ -29,6 +32,8 @@ class Artworks(Model):
     def __str__(self):
         return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Available: {self.available}'
 
+    def delete_all_artworks(self):
+        Artworks.delete().execute()
 
 db.connect()
 db.create_tables([Artists, Artworks])
@@ -53,8 +58,5 @@ def create_art_entry(artist_name, art_name, value):
 class EntryError(Exception):
     pass
 
-def delete_all_artworks():
-    pass
 
-def delete_all_artists():
-    pass
+

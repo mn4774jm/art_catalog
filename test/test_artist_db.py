@@ -2,13 +2,13 @@ from unittest import TestCase
 import os
 
 import artist_db
-from artist_db import EntryError, Artists, Artworks, delete_all_artists, delete_all_artworks
+from artist_db import EntryError, Artists, Artworks
 
 class TestArtistDb(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        artist_db.db = os.path.join('database', 'test_books.db')
+        artist_db.db = os.path.join('database', 'test_gallery.db')
         Artists.instance = None
         Artworks.instance = None
 
@@ -16,8 +16,12 @@ class TestArtistDb(TestCase):
     def setUp(self):
         self.Artist = Artists()
         self.Artwork = Artworks()
-        self.clear_tables()
+        self.clear_artwork_table()
+        self.clear_artist_table()
 
-    def clear_tables(self):
-        self.Artwork.delete_all_artworks()
+    def clear_artist_table(self):
         self.Artist.delete_all_artists()
+
+    def clear_artwork_table(self):
+        self.Artwork.delete_all_artworks()
+
