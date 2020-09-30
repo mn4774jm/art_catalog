@@ -49,7 +49,7 @@ def create_new_artist(name, email):
         new_artist.save()
         print(f'{new_artist} has been added to the database\n')
     except IntegrityError as e:
-        raise EntryError(f'Artist is already in the database') from e
+        print(f'Artist is already in the database\n')
 
 
 def create_art_entry(artist_name, art_name, value):
