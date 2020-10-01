@@ -13,8 +13,8 @@ db = SqliteDatabase(db_test_path)
 db.connect()
 db.create_tables([Artists, Artworks])
 
-class TestArtistDb(TestCase):
 
+class TestArtistDb(TestCase):
 
     def test_add_artist(self):
         Artists.delete().execute()

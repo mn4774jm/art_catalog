@@ -12,8 +12,8 @@ def get_menu_choice():
 
 def get_name():
     name = input('Enter artist name: ').strip()
-    while not name.isalpha() or name.isspace():
-        name = input('Enter artist name: ')
+    while not name.isalpha() or len(name) > 50:
+        name = input('Enter artist name (Char limit 50): ')
     return name
 
 
