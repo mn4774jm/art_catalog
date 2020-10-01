@@ -4,6 +4,11 @@ from artist_db import create_art_entry, create_new_artist, delete_artwork_by_nam
 import utility
 from query import artist_query, search_all_by_artist, search_by_available, search_artwork_by_name, get_status
 
+
+class EntryError(Exception):
+    pass
+
+
 def main():
     print('Gallery database\n')
 
@@ -36,11 +41,15 @@ def print_menu():
 
 
 def add_artist():
-    artist_name = ui.get_name()
-    if artist_query(artist_name) == 0:
-        email = ui.get_email()
-        create_new_artist(artist_name, email)
-
+        artist_name = ui.get_name()
+        if artist_query(artist_name).count() == 0:
+            email = ui.get_email()
+            try:
+                create_new_artist(artist_name, email)
+            except EntryError:
+                print('Error adding artist')
+        else:
+            print('Artist already exists')
 
 def search_by_artist_all():
     name = ui.get_name()

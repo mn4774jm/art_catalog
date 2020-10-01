@@ -11,23 +11,26 @@ def get_menu_choice():
 
 
 def get_name():
-    return input('Enter artist name: ')
+    name = input('Enter artist name: ').strip()
+    while not name.isalpha() or name.isspace():
+        name = input('Enter artist name: ')
+    return name
 
 
 def get_email():
-    return input('Enter new artist email: ')
+    return input('Enter new artist email: ').strip()
 
 
 def get_art_name():
-    return input('Enter art title: ')
+    return input('Enter art title: ').strip()
 
 
 def get_value():
-    return input('Enter price: ')
+    return input('Enter price: ').strip()
 
 
 def remove_art_check(art_name):
-    return input(f'Remove {art_name}? Enter Y to delete: ').lower()
+    return input(f'Remove {art_name}? Enter Y to delete: ').lower().strip()
 
 
 
