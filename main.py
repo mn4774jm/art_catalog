@@ -1,8 +1,8 @@
 from peewee import *
 import ui
-from artist_db import create_art_entry, create_new_artist, delete_artwork_by_name
+from artist_db import create_art_entry, create_new_artist, delete_artwork_by_name, change_artwork_status
 import utility
-from query import artist_query, search_all_by_artist, search_by_available, search_artwork_by_name
+from query import artist_query, search_all_by_artist, search_by_available, search_artwork_by_name, get_status
 
 def main():
     print('Gallery database')
@@ -76,6 +76,9 @@ def delete_art():
 
 
 def change_available_status():
+    art_name = ui.get_art_name()
+    available_status = get_status(art_name)
+    change_artwork_status(art_name, available_status)
     pass
 
 

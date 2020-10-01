@@ -33,7 +33,7 @@ class Artworks(Model):
         database = db
 
     def __str__(self):
-        return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Available: {self.available}'
+        return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Status: {self.available}'
 
 
 db.connect()
@@ -62,6 +62,16 @@ def create_art_entry(artist_name, art_name, value):
 def delete_artwork_by_name(artwork):
     Artworks.delete().where(Artworks.artwork_name == artwork).execute()
     print(f'{artwork} has been deleted')
+
+
+def change_artwork_status(name, status):
+    if status:
+        Artworks.update(available='Sold').where(Artworks.artwork_name == name).execute()
+    else:
+        Artworks.update(available='Available').where(Artworks.artwork_name == name).execute()
+
+
+
 
 
 
