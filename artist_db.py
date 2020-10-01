@@ -63,7 +63,7 @@ def delete_artwork_by_name(artwork):
     Artworks.delete().where(Artworks.artwork_name == artwork).execute()
     print(f'{artwork} has been deleted')
 
-
+#TODO report when items status has been changed
 def change_artwork_status(name, status):
     if status:
         Artworks.update(available='Sold').where(Artworks.artwork_name == name).execute()

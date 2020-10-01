@@ -18,7 +18,7 @@ def search_artwork_by_name(name):
 
 
 def get_status(name):
-    art = Artworks.select().where((Artworks.artist == name) & (Artworks.available == 'Available'))
+    art = Artworks.get_or_none((Artworks.artwork_name == name) & (Artworks.available == 'Available'))
     if art is not None:
         return True
     else:
