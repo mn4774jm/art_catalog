@@ -1,13 +1,20 @@
 from unittest import TestCase
-import config
+from config import db_test_path
 import artist_db
 from artist_db import EntryError, Artists, Artworks
 from query import artist_query
+import os
+from peewee import *
 
 
-config.db_path = 'test_gallery.Sqlite'
+db_test_path = os.path.join('database', db_test_path)
+db = SqliteDatabase(db_test_path)
+
+db.connect()
+db.create_tables([Artists, Artworks])
 
 class TestArtistDb(TestCase):
+
 
     def test_add_artist(self):
         Artists.delete().execute()
