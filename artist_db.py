@@ -9,7 +9,7 @@ db = SqliteDatabase(db_path)
 class EntryError(Exception):
     pass
 
-
+#TODO for both classes enforce constraints. Empty entries, duplicate entries and exact entries
 class Artists(Model):
     artist_id = AutoField()
     artist = CharField(unique=True)
