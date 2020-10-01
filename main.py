@@ -5,7 +5,7 @@ import utility
 from query import artist_query, search_all_by_artist, search_by_available, search_artwork_by_name, get_status
 
 def main():
-    print('Gallery database')
+    print('Gallery database\n')
 
     while True:
         print_menu()
@@ -70,7 +70,7 @@ def delete_art():
     art_name = ui.get_art_name()
     artwork_object = search_artwork_by_name(art_name)
     for art in artwork_object:
-        remove = ui.remove_art_check(art.artwork_name, art.artist)
+        remove = ui.remove_art_check(art.artwork_name)
         if remove == 'y':
             delete_artwork_by_name(art_name)
 
@@ -82,6 +82,5 @@ def change_available_status():
     pass
 
 
-
-if __name__ =='__main__':
+if __name__ == '__main__':
     main()

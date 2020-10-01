@@ -26,7 +26,8 @@ def get_value():
     return input('Enter price: ')
 
 
-def remove_art_check(art_name, artist_name):
-    return input(f'Remove {art_name} By {artist_name}? Enter Y to delete: ').lower()
+def remove_art_check(art_name):
+    return input(f'Remove {art_name}? Enter Y to delete: ').lower()
+
 
 
