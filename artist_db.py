@@ -1,4 +1,7 @@
 from peewee import *
+from peewee_validates import Validator, StringField, validate_email
+
+import utility
 from config import db_path
 import os
 
@@ -12,7 +15,7 @@ class EntryError(Exception):
 #TODO for both classes enforce constraints. Empty entries, duplicate entries and exact entries
 class Artists(Model):
     artist_id = AutoField()
-    artist = CharField(unique=True)
+    artist = CharField(null=False, unique=True)
     email = CharField()
 
     class Meta:
@@ -28,8 +31,8 @@ class Artists(Model):
 class Artworks(Model):
     artwork_id = AutoField()
     artist = ForeignKeyField(Artists, backref= 'works')
-    artwork_name = CharField(unique=True)
-    price = DecimalField()
+    artwork_name = CharField(null=False, unique=True)
+    price = DecimalField(null=False)
     available = CharField(default='Available')
 
     class Meta:
@@ -43,6 +46,10 @@ class Artworks(Model):
 
 db.connect()
 db.create_tables([Artists, Artworks])
+
+
+class EmailValidate(Validator):
+    email = validate_email()
 
 
 def create_new_artist(name, email):

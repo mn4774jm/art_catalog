@@ -1,4 +1,5 @@
 from artist_db import Artists, Artworks
+import re
 
 
 def get_menu_choice():
@@ -18,15 +19,31 @@ def get_name():
 
 
 def get_email():
-    return input('Enter new artist email: ').strip()
+    email_pattern = re.compile(r'\w+@\w+\.\w{2,}')
+    email = input('Enter new artist email: ').strip()
+    mo = email_pattern.search(email)
+    while len(email) > 50 or len(email) < 1 or mo is None:
+        email = input("Enter valid email address (Char limit 50): ")
+        mo = email_pattern.search(email)
+    return email
 
 
 def get_art_name():
-    return input('Enter art title: ').strip()
+    art_name = input('Enter art title: ').strip()
+    while len(art_name) < 1:
+        art_name = input('Please enter art title: ')
+    return art_name
 
 
 def get_value():
-    return input('Enter price: ').strip()
+    value = input('Enter Price: ').strip()
+    while True:
+        try:
+            value = float(value)
+            break
+        except ValueError:
+            value = input('Please enter only numbers: ')
+    return value
 
 
 def remove_art_check(art_name):

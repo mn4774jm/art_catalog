@@ -47,9 +47,9 @@ def add_artist():
             try:
                 create_new_artist(artist_name, email)
             except EntryError:
-                print('Error adding artist')
+                print('Error adding artist\n')
         else:
-            print('Artist already exists')
+            print('Artist already exists\n')
 
 def search_by_artist_all():
     name = ui.get_name()
@@ -69,7 +69,7 @@ def add_art():
     try:
         artist_name = ui.get_name()
         art_name = ui.get_art_name()
-        value = utility.validate_price(ui.get_value())
+        value = ui.get_value()
         create_art_entry(artist_query(artist_name), art_name, value)
     except IntegrityError as e:
         pass
@@ -79,7 +79,7 @@ def delete_art():
     art_name = ui.get_art_name()
     artwork_object = search_artwork_by_name(art_name)
     for art in artwork_object:
-        remove = ui.remove_art_check(art.artwork_name)
+        remove = ui.remove_art_check(art)
         if remove == 'y':
             delete_artwork_by_name(art_name)
 
