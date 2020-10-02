@@ -2,7 +2,6 @@ from unittest import TestCase
 from config import db_test_path
 import artist_db
 from artist_db import EntryError, Artists, Artworks
-from query import artist_query
 import os
 from peewee import *
 
