@@ -21,13 +21,19 @@ class TestArtistDb(TestCase):
         artist = Artists.select().where(Artists.artist == 'dave').get()
         self.assertEqual(artist.artist, "dave")
 
-
-
     def test_add_duplicate(self):
         Artists.delete().execute()
         artist_db.create_new_artist('dave', '12345@gmail.com')
         with self.assertRaises(EntryError):
             artist_db.create_new_artist('dave', '12345@gmail.com')
+
+    def test_create_art_artist_exists(self):
+        pass
+
+    def test_create_art_no_artist(self):
+        pass
+
+
 
 
 

@@ -24,25 +24,23 @@ class TestQuery(TestCase):
     def test_search_for_all_by_artist_no_art_in_db(self):
         artist_name = query.artist_query('testNoArt').get()
         result = query.search_all_by_artist(artist_name)
-        art_count = 0
-        for art in result:
-            art_count += 1
+        art_count = len(list(result))
         self.assertEqual(art_count, 0)
 
-    def test_search_for_all_entry_not_alpha(self):
-        pass
-
     def test_search_available_by_artist_in_db(self):
-        pass
-
-    def test_search_available_by_artist_not_in_db(self):
-        pass
-
-    def test_search_available_entry_not_alpha(self):
-        pass
+        index_count = 0
+        test_list = ['test_art_2', 'test_art_3']
+        artist_name = query.artist_query('test').get()
+        result = query.search_by_available(artist_name)
+        for art in result:
+            print(art)
+            self.assertEqual(test_list[index_count], art.artwork_name)
+            index_count += 1
 
     def test_search_artwork_by_art_name_in_db(self):
-        pass
+        result = query.search_artwork_by_name('test_art_1').get()
+        self.assertEqual(result.artwork_name, 'test_art_1')
 
     def test_search_artwork_by_art_name_not_in_db(self):
-        pass
+        results_returned = len(query.search_artwork_by_name('not_in_db'))
+        self.assertEqual(results_returned, 0)

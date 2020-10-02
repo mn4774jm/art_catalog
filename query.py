@@ -1,16 +1,26 @@
 from artist_db import Artists, Artworks
+from peewee import *
 
 
 def artist_query(name):
-    return Artists.select().where(Artists.artist == name)
+    try:
+        return Artists.select().where(Artists.artist == name)
+    except IntegrityError:
+        print('Entry error ')
 
 
 def search_all_by_artist(name):
-    return Artworks.select().where(Artworks.artist == name).order_by(Artworks.artwork_name).order_by(Artworks.available)
+    try:
+        return Artworks.select().where(Artworks.artist == name).order_by(Artworks.artwork_name)
+    except IntegrityError:
+        print("Entry error ")
 
 
 def search_by_available(name):
-    return Artworks.select().where((Artworks.artist == name) & (Artworks.available == 'Available'))
+    try:
+        return Artworks.select().where((Artworks.artist == name) & (Artworks.available == 'Available'))
+    except IntegrityError:
+        print("Entry error ")
 
 
 def search_artwork_by_name(name):
@@ -18,9 +28,12 @@ def search_artwork_by_name(name):
 
 
 def get_status(name):
-    art = Artworks.get_or_none((Artworks.artwork_name == name) & (Artworks.available == 'Available'))
-    if art is not None:
-        return True
-    else:
-        return False
+    try:
+        art = Artworks.get_or_none((Artworks.artwork_name == name) & (Artworks.available == 'Available'))
+        if art is not None:
+            return True
+        else:
+            return False
+    except IntegrityError:
+        print("Entry error ")
 
