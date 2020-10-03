@@ -38,8 +38,6 @@ class Artworks(Model):
     def __str__(self):
         return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Status: {self.available}'
 
-    # def delete_all_artworks(self):
-    #     Artworks.delete().execute()
 
 
 db.connect()
