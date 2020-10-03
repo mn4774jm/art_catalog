@@ -37,12 +37,12 @@ def get_art_name():
 
 def get_value():
     value = input('Enter Price: ').strip()
-    while True:
+    while True or value < 0:
         try:
             value = float(value)
             break
         except ValueError:
-            value = input('Please enter only numbers: ')
+            value = input('Please enter only non-negative numbers: ')
     return value
 
 

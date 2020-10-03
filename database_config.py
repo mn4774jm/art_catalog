@@ -1,3 +1,3 @@
 # configuration setting for sqlite database
 
-db_path = 'gallery.sqlite'
+db_path = 'database/gallery.sqlite'

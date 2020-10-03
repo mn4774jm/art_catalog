@@ -2,7 +2,7 @@ from peewee import *
 import ui
 from artist_db import create_art_entry, create_new_artist, delete_artwork_by_name, change_artwork_status
 import utility
-from query import artist_query, search_all_by_artist, search_by_available, search_artwork_by_name, get_status
+from artist_db import artist_query, search_all_by_artist, search_by_available, search_artwork_by_name, get_status
 
 
 class EntryError(Exception):
