@@ -1,6 +1,6 @@
 from peewee import *
 
-from config import db_path
+from database_config import db_path
 import os
 
 db_path = os.path.join('database', db_path)
@@ -9,7 +9,7 @@ db = SqliteDatabase(db_path)
 
 class EntryError(Exception):
     pass
-
+#TODO Create additional constraints
 class Artists(Model):
     artist_id = AutoField()
     artist = CharField(null=False, unique=True, max_length=50)
@@ -20,9 +20,6 @@ class Artists(Model):
 
     def __str__(self):
         return f'Name: {self.artist} | email: {self.email}'
-
-    def delete_all_artists(self):
-        Artists.delete().execute()
 
 
 class Artworks(Model):
@@ -37,7 +34,6 @@ class Artworks(Model):
 
     def __str__(self):
         return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Status: {self.available}'
-
 
 
 db.connect()

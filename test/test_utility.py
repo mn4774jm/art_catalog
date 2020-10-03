@@ -2,7 +2,7 @@ from unittest import TestCase
 from artist_db import Artists, Artworks
 import artist_db
 import os
-import config
+import database_config
 import utility
 import query
 

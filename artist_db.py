@@ -11,7 +11,6 @@ def create_new_artist(name, email):
     try:
         new_artist = Artists(artist=name, email=email)
         new_artist.save()
-        print(new_artist)
     except IntegrityError as e:
         raise EntryError(f'Artist is already in the database\n') from e
 

@@ -25,5 +25,3 @@ def get_status(name):
         return True
     else:
         return False
-
-
