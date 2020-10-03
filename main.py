@@ -10,7 +10,7 @@ class EntryError(Exception):
 
 
 def main():
-    print('Gallery database\n')
+    print('Gallery database')
 
     while True:
         print_menu()

@@ -4,10 +4,13 @@ import artist_db
 from artist_db import EntryError, Artists, Artworks
 import os
 from peewee import *
+import config
+import query
 
 
 db_test_path = os.path.join('database', db_test_path)
 db = SqliteDatabase(db_test_path)
+
 
 db.connect()
 db.create_tables([Artists, Artworks])
@@ -15,9 +18,33 @@ db.create_tables([Artists, Artworks])
 
 class TestArtistDb(TestCase):
 
+    @classmethod
+    def setUp(cls):
+        config.db_path = os.path.join('database', 'test_art.db')
+        artist_db.Artists.instance = None
+        artist_db.Artworks.instance = None
+
+    # def setUp(self):
+    #     self.Artists = artist_db.Artists()
+    #     self.Artworks = artist_db.Artworks()
+
+
+    def create_test_data(self):
+        art_list = ['test_art_1', 'test_art_2', 'test_art_3']
+        Artists.delete().execute()
+        new_artist1 = artist_db.create_new_artist('test', 'test@test.com')
+        new_artist1.save()
+        new_artist2 = artist_db.create_new_artist('testNoArt', 'test@test.com')
+        new_artist2.save()
+        for i in range(3):
+            new_art = artist_db.create_art_entry('test', art_list[i])
+            new_art.save()
+
+
     def test_add_artist(self):
         Artists.delete().execute()
-        artist_db.create_new_artist('dave', '12345@gmail.com')
+        artist = Artists(artist='dave', email='12345@gmail.com')
+        artist.save()
         artist = Artists.select().where(Artists.artist == 'dave').get()
         self.assertEqual(artist.artist, "dave")
 
@@ -28,11 +55,12 @@ class TestArtistDb(TestCase):
             artist_db.create_new_artist('dave', '12345@gmail.com')
 
     def test_create_art_artist_exists(self):
+
+        # artist_db.create_art_entry()
         pass
 
     def test_create_art_no_artist(self):
         pass
-
 
 
 

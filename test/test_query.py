@@ -1,16 +1,51 @@
 from unittest import TestCase
-
+import config
 import query
+import artist_db
+import os
+import artist_db
+from artist_db import Artworks, Artists
+
+
+
+
+# def setUp(self):
+#     self.Artists = artist_db.Artists()
+#     self.Artworks = artist_db.Artworks()
 
 class TestQuery(TestCase):
+
+    # @classmethod
+    def setUp(self):
+        config.db_path = os.path.join('database', 'test_art.db')
+        artist_db.Artists.instance = None
+        artist_db.Artworks.instance = None
+
+    def create_test_data(self):
+        Artists.delete().execute()
+        artist = Artists(artist='test', email='test@test.com')
+        artist.save()
+
+        art = Artworks(artist=query.artist_query('test'), artwork_name='test_art_1', price=123)
+        art.save()
+        art = Artworks(artist=query.artist_query('test'), artwork_name='test_art_2', price=123)
+        art.save()
+        art = Artworks(artist=query.artist_query('test'), artwork_name='test_art_3', price=123)
+        art.save()
+        artist = Artists(artist='testNoArt', email='test@test.com')
+        artist.save()
 
     def test_artist_query_not_in_database(self):
         result = query.artist_query('test_name_not_in_db')
         self.assertEqual(result, '')
 
+    # TODO***********
+
     def test_artist_query_in_database(self):
         result = query.artist_query('test').get()
         self.assertEqual(result.artist, 'test')
+
+    # TODO***********
 
     def test_search_for_all_by_artist_in_db(self):
         index_count = 0
@@ -21,11 +56,15 @@ class TestQuery(TestCase):
             self.assertEqual(test_list[index_count], art.artwork_name)
             index_count += 1
 
+    # TODO***********
+
     def test_search_for_all_by_artist_no_art_in_db(self):
         artist_name = query.artist_query('testNoArt').get()
         result = query.search_all_by_artist(artist_name)
-        art_count = len(list(result))
+        art_count = result.count()
         self.assertEqual(art_count, 0)
+
+    # TODO***********
 
     def test_search_available_by_artist_in_db(self):
         index_count = 0
@@ -44,3 +83,16 @@ class TestQuery(TestCase):
     def test_search_artwork_by_art_name_not_in_db(self):
         results_returned = len(query.search_artwork_by_name('not_in_db'))
         self.assertEqual(results_returned, 0)
+
+    def test_status_available(self):
+        results = query.get_status('test_art_1')
+        self.assertEqual(results, False)
+        results = query.get_status('test_art_2')
+        self.assertEqual(results, True)
+
+
+
+
+
+
+

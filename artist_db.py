@@ -1,7 +1,5 @@
 from peewee import *
-from peewee_validates import Validator, StringField, validate_email
 
-import utility
 from config import db_path
 import os
 
@@ -12,11 +10,11 @@ db = SqliteDatabase(db_path)
 class EntryError(Exception):
     pass
 
-#TODO for both classes enforce constraints. Empty entries, duplicate entries and exact entries
+
 class Artists(Model):
     artist_id = AutoField()
-    artist = CharField(null=False, unique=True)
-    email = CharField()
+    artist = CharField(null=False, unique=True, max_length=50)
+    email = CharField(null=False, max_length=50)
 
     class Meta:
         database = db
@@ -24,8 +22,8 @@ class Artists(Model):
     def __str__(self):
         return f'Name: {self.artist} | email: {self.email}'
 
-    def delete_all_artists(self):
-        Artists.delete().execute()
+    # def delete_all_artists(self):
+    #     Artists.delete().execute()
 
 
 class Artworks(Model):
@@ -33,7 +31,7 @@ class Artworks(Model):
     artist = ForeignKeyField(Artists, backref= 'works')
     artwork_name = CharField(null=False, unique=True)
     price = DecimalField(null=False)
-    available = CharField(default='Available')
+    available = CharField(default='Available', null=False)
 
     class Meta:
         database = db
@@ -41,21 +39,19 @@ class Artworks(Model):
     def __str__(self):
         return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Status: {self.available}'
 
-    def delete_all_artworks(self):
-        Artworks.delete().execute()
+    # def delete_all_artworks(self):
+    #     Artworks.delete().execute()
+
 
 db.connect()
 db.create_tables([Artists, Artworks])
-
-
-class EmailValidate(Validator):
-    email = validate_email()
 
 
 def create_new_artist(name, email):
     try:
         new_artist = Artists(artist=name, email=email)
         new_artist.save()
+        print(new_artist)
     except IntegrityError as e:
         raise EntryError(f'Artist is already in the database\n') from e
 
