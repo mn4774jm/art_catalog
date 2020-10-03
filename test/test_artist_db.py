@@ -19,8 +19,8 @@ db.create_tables([Artists, Artworks])
 
 class TestArtistDb(TestCase):
 
-    @classmethod
-    def setUp(cls):
+    # @classmethod
+    def setUp(self):
         config.db_path = os.path.join('database', 'test_art.db')
         artist_db.delete_all_tables()
         # artist_db.Artists.instance = None
@@ -30,9 +30,9 @@ class TestArtistDb(TestCase):
     #     self.Artists = artist_db.Artists()
     #     self.Artworks = artist_db.Artworks()
 
+
     def create_test_data(self):
-        # self.Artists.delete().execute()
-        # self.Artworks.delete().execute()
+        self.clear_tables()
         self.artist = Artists(artist='test', email='test@test.com')
         self.artist.save()
 
@@ -46,16 +46,17 @@ class TestArtistDb(TestCase):
         self.artist.save()
 
 
-    def create_test_data(self):
-        art_list = ['test_art_1', 'test_art_2', 'test_art_3']
-        Artists.delete().execute()
-        new_artist1 = artist_db.create_new_artist('test', 'test@test.com')
-        new_artist1.save()
-        new_artist2 = artist_db.create_new_artist('testNoArt', 'test@test.com')
-        new_artist2.save()
-        for i in range(3):
-            new_art = artist_db.create_art_entry('test', art_list[i])
-            new_art.save()
+    # def create_test_data(self):
+    #     artist_db.delete_all_tables()
+    #     art_list = ['test_art_1', 'test_art_2', 'test_art_3']
+    #     Artists.delete().execute()
+    #     new_artist1 = artist_db.create_new_artist('test', 'test@test.com')
+    #     new_artist1.save()
+    #     new_artist2 = artist_db.create_new_artist('testNoArt', 'test@test.com')
+    #     new_artist2.save()
+    #     for i in range(3):
+    #         new_art = artist_db.create_art_entry('test', art_list[i])
+    #         new_art.save()
 
 
     def test_add_artist(self):
@@ -78,6 +79,9 @@ class TestArtistDb(TestCase):
 
     def test_create_art_no_artist(self):
         pass
+
+    def clear_tables(self):
+        artist_db.delete_all_tables()
 
 
 
