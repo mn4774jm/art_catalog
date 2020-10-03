@@ -5,6 +5,7 @@ from artist_db import EntryError, Artists, Artworks
 import os
 from peewee import *
 import config
+import models
 import query
 
 
@@ -21,12 +22,28 @@ class TestArtistDb(TestCase):
     @classmethod
     def setUp(cls):
         config.db_path = os.path.join('database', 'test_art.db')
-        artist_db.Artists.instance = None
-        artist_db.Artworks.instance = None
+        artist_db.delete_all_tables()
+        # artist_db.Artists.instance = None
+        # artist_db.Artworks.instance = None
 
     # def setUp(self):
     #     self.Artists = artist_db.Artists()
     #     self.Artworks = artist_db.Artworks()
+
+    def create_test_data(self):
+        # self.Artists.delete().execute()
+        # self.Artworks.delete().execute()
+        self.artist = Artists(artist='test', email='test@test.com')
+        self.artist.save()
+
+        self.art = Artworks(artist=query.artist_query('test'), artwork_name='test_art_1', price=123, available='Sold')
+        self.art.save()
+        self.art = Artworks(artist=query.artist_query('test'), artwork_name='test_art_2', price=123)
+        self.art.save()
+        self.art = Artworks(artist=query.artist_query('test'), artwork_name='test_art_3', price=123)
+        self.art.save()
+        self.artist = Artists(artist='testNoArt', email='test@test.com')
+        self.artist.save()
 
 
     def create_test_data(self):
