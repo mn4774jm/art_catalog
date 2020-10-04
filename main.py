@@ -88,7 +88,7 @@ def change_available_status():
     art_name = ui.get_art_name()
     available_status = get_status(art_name)
     change_artwork_status(art_name, available_status)
-    pass
+    utility.artwork_output(search_artwork_by_name(art_name))
 
 
 if __name__ == '__main__':

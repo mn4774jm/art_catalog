@@ -1,5 +1,5 @@
 from peewee import *
-
+from unittest import TestCase
 from database_config import db_path
 
 db = SqliteDatabase(db_path)
@@ -7,6 +7,7 @@ db = SqliteDatabase(db_path)
 
 class EntryError(Exception):
     pass
+
 
 class BaseModel(Model):
     class Meta:
@@ -27,10 +28,11 @@ class Artworks(BaseModel):
     artist = ForeignKeyField(Artists, backref= 'works', null=False)
     artwork_name = CharField(null=False, unique=True)
     price = DecimalField(null=False, constraints=[Check('price > 0.0')])
-    available = CharField(default='Available', null=False)
+    available = BooleanField(default=True, null=False)
 
     def __str__(self):
-        return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Status: {self.available}'
+        status = 'Available' if self.available else 'Sold'
+        return f'Artist: {self.artist} | Name: {self.artwork_name} | Price: '+'{0:.2f}'.format(self.price)+f' | Status: {status}'
 
 
 db.connect()

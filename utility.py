@@ -4,7 +4,7 @@ from peewee_validates import Validator, StringField, validate_email, validate_no
 
 def artwork_output(record):
     for artworks in record:
-        print(f'Name: {artworks.artwork_name} | Price: {artworks.price} | Status: {artworks.available}')
+        print(artworks)
     print(f'{record.count()} item(s) found\n')
 
 

@@ -30,18 +30,19 @@ def delete_artwork_by_name(artwork):
 
 
 def change_artwork_status(name, status):
-    if status:
-        Artworks.update(available='Sold').where(Artworks.artwork_name == name).execute()
-        print(f'The status of {name} has been changed to sold\n')
-    else:
-        Artworks.update(available='Available').where(Artworks.artwork_name == name).execute()
-        print(f'The status of {name} has been changed to Available\n')
+    # if status:
+    Artworks.update(available=status).where(Artworks.artwork_name == name).execute()
+    # else:
+    #     Artworks.update(available='Available').where(Artworks.artwork_name == name).execute()
+    #     print(f'The status of {name} has been changed to Available\n')
+
 
 def artist_query(name):
     try:
         return Artists.select().where(Artists.artist == name)
     except IntegrityError:
         print('error entry')
+
 
 def search_all_by_artist(name):
     return Artworks.select().where(Artworks.artist == name).order_by(Artworks.artwork_name)
@@ -58,9 +59,9 @@ def search_artwork_by_name(name):
 def get_status(name):
     art = Artworks.get_or_none((Artworks.artwork_name == name) & (Artworks.available == 'Available'))
     if art is not None:
-        return True
-    else:
         return False
+    else:
+        return True
 
 
 
