@@ -77,12 +77,14 @@ class TestArtistDb(TestCase):
             artist_db.create_art_entry(artist_db.artist_query('test'), 'test_art_2', 123)
 
     def test_create_art_no_artist(self):
-        #TODO
-        pass
+        self.clear_tables()
+        with self.assertRaises(EntryError):
+            artist_db.create_art_entry(None, 'new_art', 500)
 
     def test_create_art_non_positive_float_price(self):
-        pass
-
+        self.clear_tables()
+        with self.assertRaises(EntryError):
+            artist_db.create_art_entry(artist_db.artist_query('test'), 'new_art', -500)
 
     def test_artist_query_not_in_database(self):
         self.clear_tables()
