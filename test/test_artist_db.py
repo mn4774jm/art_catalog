@@ -46,7 +46,10 @@ class TestArtistDb(TestCase):
         self.assertEqual(artist.artist, "dave")
 
     def test_add_artist_no_name(self):
-        pass
+        self.clear_tables()
+        self.create_test_data()
+        with self.assertRaises(EntryError):
+            artist_db.create_new_artist(None, 'test@test.com')
 
     def test_add_artist_no_email(self):
         pass

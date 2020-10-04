@@ -8,11 +8,11 @@ def delete_all_tables():
     Artists.delete().execute()
 
 def create_new_artist(name, email):
+    new_artist = Artists(artist=name, email=email)
     try:
-        new_artist = Artists(artist=name, email=email)
         new_artist.save()
     except IntegrityError as e:
-        raise EntryError(f'Artist is already in the database\n') from e
+        raise EntryError(f'Entry error\n') from e
 
 
 def create_art_entry(artist_name, art_name, value):
@@ -30,11 +30,7 @@ def delete_artwork_by_name(artwork):
 
 
 def change_artwork_status(name, status):
-    # if status:
     Artworks.update(available=status).where(Artworks.artwork_name == name).execute()
-    # else:
-    #     Artworks.update(available='Available').where(Artworks.artwork_name == name).execute()
-    #     print(f'The status of {name} has been changed to Available\n')
 
 
 def artist_query(name):
