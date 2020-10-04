@@ -2,39 +2,37 @@ from unittest import TestCase
 import artist_db
 from artist_db import EntryError
 from peewee import *
-import database_config
+from database_config import test_db_path
 
 from models import Artists, Artworks
-database_config.db_path = 'database/test_gallery.sqlite'
-db = SqliteDatabase(database_config.db_path)
+db = SqliteDatabase(test_db_path)
 
-
+# models from artist_db collected for use with setting up my test db
 MODELS = [Artists, Artworks]
-
-db.bind(MODELS, bind_refs=False, bind_backrefs=False)
-db.connect()
-db.create_tables(MODELS)
 
 
 class TestArtistDb(TestCase):
 
     def setUp(self):
+        # bind model classes to the new db
+        # since list is complete binding dependencies isn't required
+        # http://docs.peewee-orm.com/en/latest/peewee/database.html  #connection-management
+        db.bind(MODELS, bind_refs=False, bind_backrefs=False)
+        db.connect()
+        db.create_tables(MODELS)
 
-        self.clear_tables()
+    def tearDown(self):
+        # tables dropped when finished. Useful when working with large data sets in testing
+        db.drop_tables(MODELS)
+        db.close()
 
     def create_test_data(self):
         self.clear_tables()
-        self.artist = Artists(artist='test', email='test@test.com')
-        self.artist.save()
-
-        self.art = Artworks(artist=artist_db.artist_query('test'), artwork_name='test_art_1', price=123, available='Sold')
-        self.art.save()
-        self.art = Artworks(artist=artist_db.artist_query('test'), artwork_name='test_art_2', price=123)
-        self.art.save()
-        self.art = Artworks(artist=artist_db.artist_query('test'), artwork_name='test_art_3', price=123)
-        self.art.save()
-        self.artist = Artists(artist='testNoArt', email='test@test.com')
-        self.artist.save()
+        Artists(artist='test', email='test@test.com').save()
+        Artworks(artist=artist_db.artist_query('test'), artwork_name='test_art_1', price=123, available='Sold').save()
+        Artworks(artist=artist_db.artist_query('test'), artwork_name='test_art_2', price=123).save()
+        Artworks(artist=artist_db.artist_query('test'), artwork_name='test_art_3', price=123).save()
+        Artists(artist='testNoArt', email='test@test.com').save()
 
     def clear_tables(self):
         artist_db.delete_all_tables()
@@ -137,7 +135,7 @@ class TestArtistDb(TestCase):
         results = artist_db.get_status('test_art_2')
         self.assertEqual(results, True)
 
-db.close()
+
 
 
 
