@@ -86,6 +86,7 @@ class TestArtistDb(TestCase):
         with self.assertRaises(EntryError):
             artist_db.create_art_entry(artist_db.artist_query('test'), 'new_art', -500)
 
+    #TODO this part of program still crashes when an artist is not in the database
     def test_artist_query_not_in_database(self):
         self.clear_tables()
         self.create_test_data()

@@ -12,7 +12,7 @@ def get_menu_choice():
 
 
 def get_name():
-    name = input('Enter artist name: ').strip()
+    name = input('Enter artist name: ').strip().capitalize()
     while not name.isalpha() or len(name) > 50 or len(name) < 1:
         name = input('Enter artist name (Char limit 50): ')
     return name
@@ -29,7 +29,7 @@ def get_email():
 
 
 def get_art_name():
-    art_name = input('Enter art title: ').strip()
+    art_name = input('Enter art title: ').strip().capitalize()
     while len(art_name) < 1:
         art_name = input('Please enter art title: ')
     return art_name
