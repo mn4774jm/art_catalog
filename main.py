@@ -66,16 +66,19 @@ def search_by_artist_available():
 
 
 def add_art():
-    try:
-        artist_name = ui.get_name()
-    except IntegrityError as e:
-        pass
+    # try:
+    artist_name = ui.get_name()
+    # except IntegrityError as e:
+    #     pass
     art_name = ui.get_art_name()
     value = ui.get_value()
-    try:
-        create_art_entry(artist_query(artist_name), art_name, value)
-    except IntegrityError as e:
-        raise EntryError('No artist by that name in DB')
+    if artist_query(artist_name).count() == 0:
+        print('No artist in db\n')
+    else:
+        try:
+            create_art_entry(artist_query(artist_name), art_name, value)
+        except IntegrityError as e:
+            raise EntryError('No artist by that name in DB')
 
 
 def delete_art():
