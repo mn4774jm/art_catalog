@@ -29,7 +29,7 @@ class TestArtistDb(TestCase):
     def create_test_data(self):
         self.clear_tables()
         Artists(artist='test', email='test@test.com').save()
-        Artworks(artist=artist_db.artist_query('test'), artwork_name='test_art_1', price=123, available='Sold').save()
+        Artworks(artist=artist_db.artist_query('test'), artwork_name='test_art_1', price=123, available=False).save()
         Artworks(artist=artist_db.artist_query('test'), artwork_name='test_art_2', price=123).save()
         Artworks(artist=artist_db.artist_query('test'), artwork_name='test_art_3', price=123).save()
         Artists(artist='testNoArt', email='test@test.com').save()
@@ -59,8 +59,11 @@ class TestArtistDb(TestCase):
             artist_db.create_new_artist('dave', '12345@gmail.com')
 
     def test_create_art_artist_exists(self):
-        #TODO
-        pass
+        self.clear_tables()
+        self.create_test_data()
+        artist_db.create_art_entry(artist_db.artist_query('test'), 'new_art', 500)
+        result = Artworks.select().where(Artworks.artwork_name == 'new_art').get()
+        self.assertEqual(result.artwork_name, 'new_art')
 
     def test_art_name_already_exists(self):
         pass
@@ -131,9 +134,9 @@ class TestArtistDb(TestCase):
         self.clear_tables()
         self.create_test_data()
         results = artist_db.get_status('test_art_1')
-        self.assertEqual(results, False)
-        results = artist_db.get_status('test_art_2')
         self.assertEqual(results, True)
+        results = artist_db.get_status('test_art_2')
+        self.assertEqual(results, False)
 
 
 

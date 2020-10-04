@@ -41,15 +41,15 @@ def print_menu():
 
 
 def add_artist():
-        artist_name = ui.get_name()
-        if artist_query(artist_name).count() == 0:
-            email = ui.get_email()
-            try:
-                create_new_artist(artist_name, email)
-            except EntryError:
-                print('Error adding artist\n')
-        else:
-            print('Artist already exists\n')
+    artist_name = ui.get_name()
+    if artist_query(artist_name).count() == 0:
+        email = ui.get_email()
+        try:
+            create_new_artist(artist_name, email)
+        except EntryError:
+            print('Error adding artist\n')
+    else:
+        print('Artist already exists\n')
 
 def search_by_artist_all():
     name = ui.get_name()
