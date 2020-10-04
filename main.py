@@ -47,7 +47,7 @@ def add_artist():
         try:
             create_new_artist(artist_name, email)
         except EntryError:
-            print('Error adding artist\n')
+            raise EntryError('Error adding artist\n')
     else:
         print('Artist already exists\n')
 

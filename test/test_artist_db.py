@@ -49,10 +49,12 @@ class TestArtistDb(TestCase):
         self.clear_tables()
         self.create_test_data()
         with self.assertRaises(EntryError):
-            artist_db.create_new_artist(None, 'test@test.com')
+            artist_db.create_new_artist('', 'test@test.com').save()
 
     def test_add_artist_no_email(self):
-        pass
+        self.clear_tables()
+        with self.assertRaises(EntryError):
+            artist_db.create_new_artist('test', '').save()
 
     def test_add_duplicate(self):
         self.clear_tables()
@@ -69,7 +71,10 @@ class TestArtistDb(TestCase):
         self.assertEqual(result.artwork_name, 'new_art')
 
     def test_art_name_already_exists(self):
-        pass
+        self.clear_tables()
+        self.create_test_data()
+        with self.assertRaises(EntryError):
+            artist_db.create_art_entry(artist_db.artist_query('test'), 'test_art_2', 123)
 
     def test_create_art_no_artist(self):
         #TODO

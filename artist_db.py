@@ -8,6 +8,8 @@ def delete_all_tables():
     Artists.delete().execute()
 
 def create_new_artist(name, email):
+    if len(name) < 1 or len(email) <1:
+        raise EntryError('No artist name entered')
     new_artist = Artists(artist=name, email=email)
     try:
         new_artist.save()
@@ -16,12 +18,12 @@ def create_new_artist(name, email):
 
 
 def create_art_entry(artist_name, art_name, value):
+    new_art = Artworks(artist=artist_name, artwork_name=art_name, price=value)
     try:
-        new_art = Artworks(artist=artist_name, artwork_name=art_name, price=value)
         new_art.save()
         print(f'{new_art}\n')
     except IntegrityError as e:
-        print(f'Unable to process entry request {e}')
+        raise EntryError(f'Unable to process entry request {e}')
 
 
 def delete_artwork_by_name(artwork):
