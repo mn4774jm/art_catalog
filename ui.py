@@ -1,6 +1,7 @@
 from artist_db import Artists, Artworks
 import re
 
+# ui.py is used to collect and validate user entry data before being sent to other functions.
 
 def get_menu_choice():
     choice = input('\nPlease choose an option (1-4) or press "Q" to quit: ')
@@ -18,6 +19,9 @@ def get_name():
     return name
 
 
+# admittedly it could have been better to create a custom constraint in db to handle validation, but the regular
+# expression used below still ensures that the correct format must be used. Length is also enforced both here and in the
+# Model constraints
 def get_email():
     email_pattern = re.compile(r'\w+@\w+\.\w{2,}')
     email = input('Enter new artist email: ').strip()
@@ -28,6 +32,7 @@ def get_email():
     return email
 
 
+# Does not allow for empty strings and capitalizes entries for uniformity
 def get_art_name():
     art_name = input('Enter art title: ').strip().capitalize()
     while len(art_name) < 1:
@@ -35,6 +40,7 @@ def get_art_name():
     return art_name
 
 
+# Does not allow for use of 0 or negative numbers in validation. Converts to float for use with DecimaField in DB
 def get_value():
     value = input('Enter Price: ').strip()
     while True or value < 0:

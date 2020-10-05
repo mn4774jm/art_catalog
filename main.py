@@ -4,7 +4,7 @@ from artist_db import create_art_entry, create_new_artist, delete_artwork_by_nam
 import utility
 from artist_db import artist_query, search_all_by_artist, search_by_available, search_artwork_by_name, get_status
 
-
+# cunstom class to signify errors in testing
 class EntryError(Exception):
     pass
 
@@ -42,6 +42,7 @@ def print_menu():
 
 def add_artist():
     artist_name = ui.get_name()
+    # artist query used to insure that the artist is not already in the database to avoid DB unique constraint error
     if artist_query(artist_name).count() == 0:
         email = ui.get_email()
         try:
@@ -51,6 +52,8 @@ def add_artist():
     else:
         print('Artist already exists\n')
 
+
+# gets the user input, queries DB to get the Artist object to be used in the search function
 def search_by_artist_all():
     name = ui.get_name()
     artist_object = artist_query(name)
@@ -66,17 +69,15 @@ def search_by_artist_available():
 
 
 def add_art():
-    # try:
-    artist_name = ui.get_name()
-    # except IntegrityError as e:
-    #     pass
+    artist_name = artist_query(ui.get_name())
     art_name = ui.get_art_name()
     value = ui.get_value()
-    if artist_query(artist_name).count() == 0:
+    # if nothing is returnered from the artist query for the artist name, no attempt will be made to create the art in the db
+    if artist_name.count() == 0:
         print('No artist in db\n')
     else:
         try:
-            create_art_entry(artist_query(artist_name), art_name, value)
+            create_art_entry(artist_name, art_name, value)
         except IntegrityError as e:
             raise EntryError('No artist by that name in DB')
 

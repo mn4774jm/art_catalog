@@ -1,7 +1,5 @@
 
-from peewee_validates import Validator, StringField, validate_email, validate_not_empty
-
-
+# simple function to neatly print formatted strings from the created objects based on their Model
 def artwork_output(record):
     for artworks in record:
         print(artworks)
