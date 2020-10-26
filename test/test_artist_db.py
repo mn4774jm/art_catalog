@@ -120,13 +120,13 @@ class TestArtistDb(TestCase):
     def test_search_available_by_artist_in_db(self):
         self.clear_tables()
         self.create_test_data()
-        index_count = 0
         test_list = ['test_art_2', 'test_art_3']
         artist_name = artist_db.artist_query('test').get()
         result = artist_db.search_by_available(artist_name)
-        for art in result:
-            self.assertEqual(test_list[index_count], art.artwork_name)
-            index_count += 1
+
+        for expected_art, actual_art in zip(test_list, result):
+            self.assertEqual(expected_art, actual_art.artwork_name)
+            
 
     def test_search_for_all_by_artist_in_db(self):
         self.clear_tables()
